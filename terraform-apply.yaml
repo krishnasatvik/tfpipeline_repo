@@ -5,7 +5,7 @@ steps:
       - '-c'
       - |
         gcloud auth activate-service-account --key-file=private-key.json
-        gcloud auth application-default login --project "tfpipeline" --quiet
+        gcloud auth application-default login --project "tfpipeline" --quiet --no-user-output-enabled
         
   - name: 'hashicorp/terraform:latest'
     entrypoint: 'terraform'
