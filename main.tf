@@ -15,4 +15,3 @@ resource "google_compute_subnetwork" "my-custom-subnet1" {
   service_account {
     scopes = ["cloud-platform"]
   }
-}
