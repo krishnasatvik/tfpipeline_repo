@@ -1,21 +1,24 @@
 steps:
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        gcloud auth activate-service-account --key-file=private-key.json
-        gcloud auth application-default login --project "tfpipeline" --quiet --no-user-output-enabled
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v0'
+      
+      - name: Authenticate
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
         
-  - name: 'hashicorp/terraform:latest'
-    entrypoint: 'terraform'
-    args:
-      - 'init'
+      - name: 'hashicorp/terraform:latest'
+        entrypoint: 'terraform'
+        args:
+          - 'init'
 
-  - name: 'hashicorp/terraform:latest'
-    entrypoint: 'terraform'
-    args:
-      - 'apply'
-      - '-auto-approve'
+      - name: 'hashicorp/terraform:latest'
+        entrypoint: 'terraform'
+        args:
+          - 'apply'
+          - '-auto-approve'
 
       
